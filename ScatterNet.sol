@@ -1,16 +1,14 @@
 pragma solidity ^0.6.0;
 
 contract Splitter {
+
     mapping(address => uint) public amountsWithdrew;
     bool) public between;
     uint public count;
-
-
     uint public totalInput;
 
     function Splitter(address[] addrs) {
         totalInput = address(this).balance;
-
         count = addrs.length;
 
         for (uint i = 0; i < addrs.length; i++) {
@@ -27,7 +25,6 @@ contract Splitter {
         Splitter.withdrawInternal(0, true);
     }
 
-   
     function withdrawInternal(uint requested, bool all) internal {
         require(between[msg.sender]);
         uint available = Splitter.balance();
@@ -38,7 +35,6 @@ contract Splitter {
 
         require(transferring <= available);
         amountsWithdrew[msg.sender] += transferring;
-
         msg.sender.transfer(transferring);
     }
 
@@ -50,9 +46,7 @@ contract Splitter {
         uint share = totalInput / count;
         uint withdrew = amountsWithdrew[msg.sender];
         uint available = share - withdrew;
-
         assert(available >= 0 && available <= share);
-
         return available;
     }
 
